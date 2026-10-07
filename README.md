@@ -20,11 +20,12 @@ This has only been tested on Arch Linux.
 The script extracts the application locally, creates a Linux Python/Qt runtime and applies a small set of Linux compatibility fixes so that the WiiM Home desktop application can run natively on Linux.
 
 To build the Linux executable you need :
--python
--uv
--7zip
--qt6-base
--wireless tools
+> python python-requests 
+uv
+7zip
+qt6-base
+wireless tools
+gst-plugins-good gst-plugins-bad gst-plugins-ugly
 
 You will also need to download the official Wiim for Mac image available on the Wiim web site (https://www.wiimhome.com/app). Tested with version 0.2.10.4.
 
