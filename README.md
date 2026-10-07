@@ -42,4 +42,4 @@ You can call the script with the **wiim** bash script. Simply copy the file to y
 
 Credits
 -------
-Author : *malfman* (see https://forum.wiimhome.com/threads/native-wiim-home-on-linux-%E2%80%93-the-desktop-app-is-basically-python-qt.10413/)
+Author : *Malfman* (see https://forum.wiimhome.com/threads/native-wiim-home-on-linux-%E2%80%93-the-desktop-app-is-basically-python-qt.10413/)
