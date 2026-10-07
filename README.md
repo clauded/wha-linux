@@ -3,7 +3,15 @@ Run Wiim Home on Linux
 
 This is not a clean-room reimplementation of WiiM Home. It reuses the platform-independent code and resources from the official installers and replaces the macOS/Windows runtime parts with Linux-native equivalents.
 
-There were a few Linux-specific issues, but they were relatively small. The striking part is that WiiM apparently already did most of the work required for a Linux version simply by choosing Python + Qt/QML for the desktop client.
+There were a few Linux-specific issues, but they are relatively small. The striking part is that WiiM apparently already did most of the work required for a Linux version simply by choosing Python + Qt/QML for the desktop client.
+
+This is an unofficial community experiment and obviously not supported by WiiM. Nothing is uploaded anywhere; usage of the official DMG happens locally on the user's machine.
+
+History
+-------
+A large part of the actual WiiM logic is Python bytecode, while much of the user interface is normal QML. The application also contains the device discovery/networking code and the desktop implementations for services such as TIDAL and Qobuz.
+
+So instead of trying to emulate the Windows version with Wine or running the Android version in Waydroid, Codex was asked it to reconstruct the small application glue using a native Linux Python/Qt runtime usingthe official macOS DMG and Windows. The file wiim-prompt.txt contains the instructions for Codex.
 
 Requirement
 -----------
@@ -30,3 +38,8 @@ This will create a run.sh script located in a subdirectory of $HOME/.local/share
 
 Running
 -------
+You can call the script with the wiim bash script. Simply copy the file to your local bin directory ($HOME/bin) and make it executable. If you want to add a launcher, you can use the .desktop file but you'll need to edit it to point the the directory where run.sh is created.
+
+Credits
+-------
+Author : malfman (see https://forum.wiimhome.com/threads/native-wiim-home-on-linux-%E2%80%93-the-desktop-app-is-basically-python-qt.10413/)
