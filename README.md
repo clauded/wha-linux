@@ -1,5 +1,5 @@
 # wha-linux
-Run Wiim Home on Linux
+**Run Wiim Home on Linux**
 
 This is not a clean-room reimplementation of WiiM Home. It reuses the platform-independent code and resources from the official installers and replaces the macOS/Windows runtime parts with Linux-native equivalents.
 
