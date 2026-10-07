@@ -11,7 +11,7 @@ History
 -------
 A large part of the actual WiiM logic is Python bytecode, while much of the user interface is normal QML. The application also contains the device discovery/networking code and the desktop implementations for services such as TIDAL and Qobuz.
 
-So instead of trying to emulate the Windows version with Wine or running the Android version in Waydroid, Codex was asked it to reconstruct the small application glue using a native Linux Python/Qt runtime usingthe official macOS DMG and Windows. The file wiim-prompt.txt contains the instructions for Codex.
+So instead of trying to emulate the Windows version with Wine or running the Android version in Waydroid, Codex was asked it to reconstruct the small application glue using a native Linux Python/Qt runtime using the official macOS DMG and Windows. The file **wiim-prompt.txt** contains the instructions for Codex.
 
 Requirement
 -----------
@@ -31,15 +31,15 @@ You will also need to download the official Wiim for Mac image available on the 
 Building
 --------
 
-Run:
-  sh wha-linux.sh /path/to/official-x86_64.dmg 
+To build with Python:
+`sh wha-linux.sh /path/to/official-x86_64.dmg`
 
-This will create a run.sh script located in a subdirectory of $HOME/.local/share/wha-linux
+This will create a run.sh script located in a subdirectory of **$HOME/.local/share/wha-linux**
 
 Running
 -------
-You can call the script with the wiim bash script. Simply copy the file to your local bin directory ($HOME/bin) and make it executable. If you want to add a launcher, you can use the .desktop file but you'll need to edit it to point the the directory where run.sh is created.
+You can call the script with the **wiim** bash script. Simply copy the file to your local bin directory ($HOME/bin) and make it executable. If you want to add a launcher, you can use the .desktop file but you'll need to edit it to point the the directory where **run.sh** is created.
 
 Credits
 -------
-Author : malfman (see https://forum.wiimhome.com/threads/native-wiim-home-on-linux-%E2%80%93-the-desktop-app-is-basically-python-qt.10413/)
+Author : *malfman* (see https://forum.wiimhome.com/threads/native-wiim-home-on-linux-%E2%80%93-the-desktop-app-is-basically-python-qt.10413/)
