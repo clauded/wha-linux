@@ -1,0 +1,27 @@
+#!/bin/sh
+
+# To compile, run this:
+#
+#cd $HOME/bin/wiim-native
+#./wha-linux-0.2.10.4.sh wiim-mac-0.2.10.4.dmg
+
+# Define the root directory to search for run.sh
+# Update SEARCH_DIR if your project/builds live elsewhere
+#SEARCH_DIR="$HOME/.cache/com.linkplay.wiimhome"
+SEARCH_DIR="$HOME/.local/share/wha-linux"
+
+# Locate the most recently modified run.sh file
+TARGET_SCRIPT=$(find "$SEARCH_DIR" -type f -name "run.sh" -printf "%T@ %p\n" 2>/dev/null | sort -nr | head -n1 | cut -d' ' -f2-)
+
+if [ -z "$TARGET_SCRIPT" ]; then
+    echo "Error: Could not find any compiled run.sh in $SEARCH_DIR" >&2
+    exit 1
+fi
+
+echo "Found target script: $TARGET_SCRIPT"
+
+# Change directory to where run.sh lives so relative dependencies load correctly
+cd "$(dirname "$TARGET_SCRIPT")" || exit 1
+
+# Execute run.sh with any passed arguments
+exec ./run.sh "$@"
