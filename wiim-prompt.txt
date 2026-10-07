@@ -1,0 +1,539 @@
+You are working on an x86_64 Linux desktop.
+
+The current directory initially contains two official WiiM Home installers supplied by the user:
+
+* `WiiM Home Setup-x86_64.dmg`
+* `WiiM Home Setup-x86_64.exe`
+
+Your task is to reconstruct and build a working **native Linux x86_64 WiiM Home desktop application** from these official distributions.
+
+This is an implementation task, not merely an analysis task.
+
+Continue autonomously through:
+
+EXTRACTION → COMPARISON → RECONSTRUCTION → LINUX PORTING → EXECUTION → DEBUGGING → TESTING → PACKAGING
+
+Do not stop after describing what would be required.
+
+## Goal
+
+Produce a Linux application that:
+
+* runs natively on Linux;
+* does not require Wine;
+* does not require Waydroid;
+* does not require Darling;
+* does not require a Windows/macOS VM;
+* uses Linux-native Python, Qt and shared libraries;
+* preserves as much of the original WiiM Home application logic and UI as possible;
+* retains normal WiiM authentication, OAuth, subscription and TLS behaviour;
+* can be rebuilt reproducibly from the two original installers.
+
+Do not rewrite WiiM Home from scratch unless genuinely necessary.
+
+Do not bypass DRM, authentication, subscriptions, OAuth, TLS verification or service authorization.
+
+## Expected architecture — VERIFY IT
+
+A previously inspected WiiM Home release used approximately:
+
+* Python 3.9;
+* PyInstaller;
+* PyQt6;
+* Qt 6;
+* Qt Quick / QML;
+* Python bytecode containing most application logic;
+* QML/resources containing much of the UI.
+
+Likely proprietary packages include:
+
+* `HOME`
+* `LPClientFramework`
+* `LPCommonWidgets`
+* `LPPermission`
+
+The application may contain implementations for:
+
+* WiiM device discovery;
+* SSDP;
+* UPnP;
+* Zeroconf;
+* `_linkplay._tcp.local.`;
+* playback;
+* queue management;
+* presets;
+* device settings;
+* TIDAL;
+* Qobuz;
+* WiiM Radio;
+* Radio Paradise.
+
+Do not assume any of this blindly. Verify the actual installers.
+
+## Use both installers intelligently
+
+Treat the macOS DMG as the preferred reconstruction source if its PyInstaller/Python/QML structure is easier to extract.
+
+Treat the Windows EXE as a second official implementation of the same application.
+
+Use:
+
+macOS implementation ↔ Windows implementation → Linux implementation
+
+Before inspecting hundreds of files manually:
+
+* hash them;
+* compare directory trees;
+* identify identical modules;
+* identify platform-specific modules;
+* analyse only the differences that matter.
+
+Do not analyse identical application modules twice.
+
+## Token/context efficiency
+
+Prefer deterministic tools over model reasoning.
+
+Use:
+
+* hashes;
+* `file`;
+* `strings`;
+* `grep` / `rg`;
+* `diff`;
+* Python scripts;
+* import tracing;
+* dependency inspection;
+* PyInstaller extraction tooling.
+
+Do not:
+
+* print massive file lists;
+* dump binaries;
+* produce huge hexdumps;
+* decompile all Python modules unnecessarily;
+* repeatedly reanalyse already understood components.
+
+Use original Python bytecode under the matching CPython version wherever possible.
+
+Only decompile modules that actually require source-level modification.
+
+Maintain concise findings in:
+
+`PORTING_NOTES.md`
+
+Optionally maintain:
+
+`BUILD_STATUS.md`
+
+with only:
+
+CURRENT MILESTONE
+CURRENT BLOCKER
+LAST SUCCESSFUL COMMAND
+NEXT ACTION
+
+## Step 1 — Extract both distributions
+
+Determine:
+
+* installer formats;
+* exact application versions;
+* Python version;
+* PyInstaller structure;
+* Qt/PyQt versions;
+* application entry point.
+
+Extract:
+
+* PyInstaller CArchive;
+* PYZ;
+* `.pyc` modules;
+* `base_library.zip`;
+* QML;
+* assets;
+* YAML/JSON/plist configuration;
+* icons;
+* Qt plugins;
+* package metadata;
+* native extensions.
+
+Keep the original installer files untouched.
+
+Create reusable extraction scripts under:
+
+`tools/`
+
+## Step 2 — Reconstruct the Python application
+
+Determine the CPython bytecode version from magic numbers.
+
+If it uses Python 3.9, create an isolated Linux Python 3.9 runtime.
+
+Suitable methods include:
+
+* uv-managed Python;
+* pyenv;
+* python-build-standalone.
+
+Prefer direct execution of reconstructed `.pyc` modules rather than unnecessary mass decompilation.
+
+Reconstruct the original package hierarchy.
+
+## Step 3 — Replace native platform dependencies
+
+Replace macOS/Windows runtime components with Linux-native versions.
+
+Likely examples:
+
+* PyQt6;
+* Qt6;
+* Pillow;
+* lxml;
+* psutil;
+* PyYAML;
+* requests;
+* httpx;
+* requests-cache;
+* zeroconf;
+* watchdog;
+* pycryptodome;
+
+plus whatever the actual import graph requires.
+
+Do not attempt to load macOS `.dylib`, Mach-O Python extensions, AppKit/Foundation/PyObjC or Windows DLL implementations when a Linux-native implementation exists.
+
+## Step 4 — Preserve the original architecture
+
+Attempt to reuse original WiiM logic for:
+
+* SSDP;
+* UPnP;
+* Zeroconf;
+* device discovery;
+* local WiiM APIs;
+* playback;
+* Now Playing;
+* queue;
+* grouping;
+* presets;
+* device settings;
+* TIDAL;
+* Qobuz;
+* WiiM Radio;
+* Radio Paradise;
+* search;
+* playlists;
+* albums/artists;
+* artwork.
+
+Preserve original QML wherever practical.
+
+Do not replace real functionality with mocks merely to get a window to appear.
+
+## Step 5 — Linux platform adapters
+
+Implement the minimum Linux-specific layer required.
+
+### Paths
+
+Use XDG-compatible locations where appropriate:
+
+* `$XDG_CONFIG_HOME`
+* `$XDG_DATA_HOME`
+* `$XDG_CACHE_HOME`
+
+### Updater
+
+Do not attempt to run Sparkle or WinSparkle.
+
+Provide a safe Linux no-op/unsupported updater backend without breaking application startup.
+
+### Sleep inhibition
+
+If required, implement Linux support using an appropriate mechanism such as systemd-logind/DBus.
+
+A clean no-op implementation is acceptable initially if this functionality is not necessary for playback.
+
+### URI/URL handling
+
+Use Qt-native URL handling or `xdg-open`.
+
+### Window activation
+
+Replace AppKit/Win32-specific foreground behaviour with Qt-native behaviour.
+
+## Step 6 — Known TIDAL Linux/QML fix
+
+A previously observed issue caused the TIDAL Home page to remain on its loading skeleton indefinitely even though:
+
+* authentication worked;
+* API calls returned HTTP 200;
+* sections were successfully populated;
+* artwork loaded;
+* playback worked.
+
+The actual Python state was correct.
+
+`LPTidalHomeState.isInitialLoading` was set to `False` correctly.
+
+The QML page instead relied on a stale imperative cached variable named approximately:
+
+`currentInitialLoading`
+
+for the loading Loader.
+
+Inspect the actual version before modifying it.
+
+If this bug exists, bind the relevant Loader directly to the authoritative Qt/Python property, conceptually:
+
+`tidalHomeState.isInitialLoading`
+
+rather than the stale cached variable.
+
+Do not simply remove the loading animation.
+
+Create a reproducible patch, e.g.:
+
+`patches/tidal-home-loading.patch`
+
+and add a small regression test that verifies:
+
+loading=true → loading UI
+loading=false → actual TIDAL content
+
+## Step 7 — Known audio-output schema edge case
+
+Some WiiM devices/firmware may trigger repeated:
+
+`KeyError: 'devName'`
+
+inside approximately:
+
+`HOME/DeviceSetting/LPDeviceSettingSoundViewController.py`
+
+in:
+
+`_updateAudioOutputUI`
+
+This may occur after:
+
+`audio_cast:get_speaker_list`
+
+If reproduced:
+
+1. capture the raw/sanitized response;
+2. identify which structure lacks `devName`;
+3. determine whether:
+
+   * an alternate field name is used;
+   * the object is not actually an audio-output entry;
+   * state is incomplete asynchronously;
+   * a normalization step is missing;
+   * schemas vary between devices/firmware.
+
+Do NOT fix this merely by blindly changing:
+
+`item["devName"]`
+
+to:
+
+`item.get("devName", "")`.
+
+Implement the correct schema-aware normalization or filtering based on actual evidence.
+
+Add a regression test using the observed device-response structure.
+
+## Step 8 — Known Preset XML edge case
+
+Some configurations may trigger:
+
+`AttributeError: 'NoneType' object has no attribute 'find'`
+
+inside approximately:
+
+`LPPresetViewController._parseXML`
+
+If reproduced:
+
+* capture the raw device response;
+* determine exactly which parsed object is `None`;
+* distinguish malformed/empty response from a parser or reconstruction issue;
+* compare macOS/Windows behaviour if necessary;
+* handle legitimate empty/unsupported responses correctly.
+
+Do not merely catch the exception unless an empty response is genuinely valid.
+
+## Step 9 — UPnP observer bind issue
+
+A Linux launch may produce:
+
+`OSError: [Errno 98] Address already in use`
+
+inside the UPnP observer HTTP server.
+
+Do not simply suppress this exception.
+
+Determine:
+
+* which address/port is being bound;
+* whether another WiiM Home instance owns it;
+* whether the original application expects socket reuse;
+* whether server lifecycle cleanup is incomplete;
+* whether Linux requires `SO_REUSEADDR`;
+* whether the observer should bind dynamically.
+
+Fix the actual lifecycle/binding issue while preserving UPnP subscriptions.
+
+## Step 10 — QML warnings
+
+Check for repeated warnings such as:
+
+`Cannot specify left, right, horizontalCenter, fill or centerIn anchors for items inside Row`
+
+and dashboard anchor-loop warnings.
+
+Do not prioritize cosmetic warnings over functional issues.
+
+Fix them only where they cause observable layout or interaction problems.
+
+## Step 11 — Launch early and iterate
+
+Create:
+
+`run.sh`
+
+early.
+
+Do not wait for perfect packaging.
+
+Milestones:
+
+M1 — Linux CPython runtime works
+M2 — original WiiM packages import
+M3 — PyQt6 initializes
+M4 — original QML loads
+M5 — WiiM Home window appears
+M6 — application remains interactive
+M7 — SSDP/Zeroconf discovery initializes
+M8 — real WiiM devices appear if present
+M9 — device switching works
+M10 — Now Playing / playback works
+M11 — TIDAL/Qobuz pages load
+M12 — normal service authentication works
+M13 — playback can be started on a WiiM
+M14 — major device settings open without exceptions
+M15 — clean restart works
+
+When something fails:
+
+1. capture the real traceback;
+2. isolate the smallest failing component;
+3. compare Windows/macOS implementations where useful;
+4. make the narrowest Linux adaptation;
+5. retest immediately.
+
+## Step 12 — Real-device testing
+
+Do not hardcode an IP address.
+
+Use the original discovery mechanism.
+
+If devices exist, begin with non-destructive operations:
+
+* discovery;
+* device info;
+* playback state;
+* current track;
+* volume read;
+* input/state read.
+
+Then test benign controls:
+
+* play/pause;
+* volume;
+* device selection;
+* queue;
+* TIDAL/Qobuz playback.
+
+If no device is available, verify that the discovery mechanisms initialize correctly without Linux-specific exceptions.
+
+## Step 13 — Project structure
+
+Produce an organised project such as:
+
+`original/`
+`extracted/`
+`src/`
+`resources/`
+`runtime/`
+`linux/`
+`patches/`
+`tools/`
+`tests/`
+`dist/`
+
+Create at minimum:
+
+* `README.md`
+* `PORTING_NOTES.md`
+* `run.sh`
+* `build.sh`
+
+`build.sh` should reconstruct the Linux application from the user's original installers plus the Linux-specific patches.
+
+Do not require the DMG to remain mounted at runtime.
+
+## Step 14 — Packaging
+
+After the application works, produce first:
+
+`dist/WiiM-Home-Linux/`
+
+as a runnable application directory.
+
+If practical afterwards, also create:
+
+`dist/WiiM-Home-Linux-x86_64.AppImage`
+
+Do not waste significant effort on AppImage packaging before the application itself works.
+
+Optionally create a `.desktop` launcher and icon installation helper.
+
+## Definition of success
+
+Do not claim success merely because files were extracted or a mock window appears.
+
+Success means:
+
+* native Linux process;
+* Linux Python/Qt libraries;
+* original WiiM Home QML/UI;
+* original application logic executing;
+* real WiiM discovery;
+* interactive dashboard;
+* device switching;
+* playback/control;
+* streaming-service functionality where accounts are available;
+* reproducible launcher/build;
+* no Wine;
+* no Waydroid;
+* no Darling;
+* no VM.
+
+## Final report
+
+Keep the final response concise:
+
+RESULT
+HOW TO RUN
+TESTED
+OUTPUT
+ARCHITECTURE
+LINUX PATCHES
+REMAINING LIMITATIONS
+
+Spend the majority of effort implementing and testing, not explaining.
+
+Begin by inspecting the DMG and EXE and executing the work.
+
