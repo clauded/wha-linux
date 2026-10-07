@@ -1,0 +1,13 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Type=Application
+Name=WiiM Home
+GenericName=Audio Control Center
+Comment=Control WiiM devices across your network
+Exec=$HOME/.local/share/wha-linux/979dd1c716952ce65be0/5feefadf65905219bd9c/out/WiiM-Home-Linux/run.sh
+Icon=$HOME/.local/share/wha-linux/979dd1c716952ce65be0/5feefadf65905219bd9c/out/WiiM-Home-Linux/app/images/ico.png
+Terminal=false
+Categories=AudioVideo;Audio;Player;Qt;
+StartupWMClass=org.wiim.home
+X-KDE-Wayland-AppID=org.wiim.home
+StartupNotify=true
