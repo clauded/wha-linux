@@ -33,7 +33,6 @@ You will also need to download the official Wiim for Mac image available on the 
 
 Building
 --------
-
 To build with Python :
 `sh wha-linux.sh /path/to/official-x86_64.dmg`
 
@@ -42,6 +41,10 @@ This will create a run.sh script located in a subdirectory of **$HOME/.local/sha
 Running
 -------
 You can call the script with the **wiim** bash script. Simply copy the file to your local bin directory ($HOME/bin) and make it executable. If you want to add a launcher, you can use the .desktop file but you'll need to edit it to point the the directory where **run.sh** is created.
+
+Known bugs
+----------
+- Presets are not available.
 
 Credits
 -------
