@@ -48,4 +48,6 @@ Known bugs
 
 Credits
 -------
-Author : *Malfman* (see https://forum.wiimhome.com/threads/native-wiim-home-on-linux-%E2%80%93-the-desktop-app-is-basically-python-qt.10413/)
+- Author : *Malfman* (see https://forum.wiimhome.com/threads/native-wiim-home-on-linux-%E2%80%93-the-desktop-app-is-basically-python-qt.10413/)
+- Contributor(s): *clauded*
+
