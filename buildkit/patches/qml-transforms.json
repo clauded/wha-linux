@@ -1,0 +1,5 @@
+[
+  {"path":"Qml/Tidal/pages/TidalCollection.qml","function":"collectionModelHasItems","accepted":["fcea7e2edcb20dbbb5dc518b3ae893cbca5f6e1223a691dbf7530723681c953c"],"replacement":"collection-has-items.txt"},
+  {"path":"Qml/Tidal/sections/TidalHomeTrackGridSection.qml","function":"modelCount","accepted":["23ed383120fde0cbe4ebdc4b955768adad5398c8bb4d59663b26975185802653"],"replacement":"track-model-count.txt"},
+  {"path":"Qml/Tidal/pages/TidalHome.qml","accepted":["0f33d12aaf8f1decfba8d32e0fa1c81e26c489808f84cc6619e2e9c3ed0f7c1a"],"replacement":"home-loader.txt"}
+]

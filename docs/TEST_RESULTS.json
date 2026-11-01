@@ -1,0 +1,39 @@
+{
+  "date": "2026-11-01",
+  "integration_baseline": "178ee738a246e0a7cfc1e7ea91e5915edce5b967",
+  "samuel_reference": "7ecf68743f5af67705dbd3cc1d4af67fa1738446",
+  "wrapper": "wha-linux.sh",
+  "wrapper_sha256": "5ac3550bd577639d2efb28e5a8021a5da9eed3dd643a985ccc2b52aa0e65c036",
+  "wrapper_size_bytes": 64374,
+  "git_apply_on_clean_claude_main": "PASS",
+  "clean_builds_from_patched_claude_checkout": "PASS: 0.2.10.5 and 0.2.11.7",
+  "regressions_from_patched_checkout": "PASS: 14 per version",
+  "native_lifecycle_from_patched_checkout": "PASS: four cycles per version; all four ports released",
+  "environment": {"distribution":"Manjaro Linux", "kernel":"6.12.108-1-MANJARO", "architecture":"x86_64", "python":"3.9.25"},
+  "official_x86_64_download_checked": "https://wiimhome.com/appexe/WiiM%20Home%20Setup-x86_64.dmg",
+  "latest_offered_version": "0.2.11.7",
+  "builder_unit_tests": {"count":4, "result":"PASS", "covers":["typed PYZ selection", "comment/whitespace tolerance", "changed executable code rejected before writes and idempotence", "readable unpack and explicit untested CLI"]},
+  "sources": [
+    {
+      "version":"0.2.10.5", "bundle_build":"20261010134527",
+      "sha256":"ae73625fab54d60b87f69aa427d04044e43b6ec5ba7f91269d00c1dcd56022eb",
+      "pyz_entry":"PYZ-00.pyz", "binding":"PyQt6", "linux_binding_version":"6.10.2",
+      "clean_standalone_build":"PASS", "compiled_qrc_verification":"PASS",
+      "focused_regression_scripts":14, "focused_regressions":"PASS",
+      "native_offscreen_cycles":["quit", "hide/restore/quit", "restart/quit", "quiet/quit"],
+      "native_cycles_result":"PASS", "listener_ports_released":[22334,22345,22346,22347]
+    },
+    {
+      "version":"0.2.11.7", "bundle_build":"20261027115101",
+      "sha256":"24a1ae3b96d5f97e7fe36a5e1b9cd26847b21ae51d8c4b51f2cd6268605174ca",
+      "pyz_entry":"PYZ.pyz", "binding":"PySide6", "linux_binding_version":"6.8.3",
+      "clean_standalone_build":"PASS", "compiled_qrc_verification":"PASS",
+      "focused_regression_scripts":14, "focused_regressions":"PASS",
+      "native_offscreen_cycles":["quit", "hide/restore/quit", "restart/quit", "quiet/quit"],
+      "native_cycles_result":"PASS", "listener_ports_released":[22334,22345,22346,22347]
+    }
+  ],
+  "historical_source_not_freshly_rebuilt":"0.2.10.4",
+  "limitations":["No real-device/account/playback acceptance for this update", "Interactive GNOME/Plasma/Wayland and actual tray clicks not retested", "Original WiiM watchdog used SIGKILL in some native shutdown cycles", "Different Python magic or unsupported Qt series still requires review"],
+  "distributable_payload":"authored tooling, guarded transformation rules, tests, dependency locks and documentation only"
+}

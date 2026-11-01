@@ -1,0 +1,1 @@
+(!root.tidalHomeState || root.tidalHomeState.isInitialLoading) ? homeSkeletonComponent : homeContentComponent

@@ -1,0 +1,4 @@
+function modelCount() {
+        var revisionMarker = root.modelRevision
+        return root.itemsModel && root.itemsModel.rowCount !== undefined ? Number(root.itemsModel.rowCount()) : 0
+    }

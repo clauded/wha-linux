@@ -1,0 +1,35 @@
+{
+  "tested_sources": [
+    {
+      "platform": "macOS x86_64 DMG",
+      "version": "WiiM Home 0.2.11.7",
+      "bundle_build": "20261027115101",
+      "sha256": "24a1ae3b96d5f97e7fe36a5e1b9cd26847b21ae51d8c4b51f2cd6268605174ca",
+      "size_bytes": 86583694,
+      "python": "CPython 3.9",
+      "qt": "PySide6 6.8.3",
+      "official_url": "https://wiimhome.com/appexe/WiiM%20Home%20Setup-x86_64.dmg",
+      "download_checked": "2026-11-01",
+      "validation": "native offscreen start, focused regressions and close/restart tested; real-device acceptance pending"
+    },
+    {
+      "platform": "macOS x86_64 DMG",
+      "version": "WiiM Home 0.2.10.5",
+      "bundle_build": "20261010134527",
+      "sha256": "ae73625fab54d60b87f69aa427d04044e43b6ec5ba7f91269d00c1dcd56022eb",
+      "size_bytes": 78667482,
+      "python": "CPython 3.9",
+      "qt": "PyQt6",
+      "validation": "locally tested: clean build, 14 regressions, native offscreen close/restart on 2026-11-01"
+    },
+    {
+      "platform": "macOS x86_64 DMG",
+      "version": "WiiM Home 0.2.10.4",
+      "bundle_build": "20260920094034",
+      "sha256": "5feefadf65905219bd9cdca09b967719ed8cdf38563aa5f67a065b3f2924d39f",
+      "size_bytes": 78665242,
+      "python": "CPython 3.9",
+      "qt": "Qt 6 / PyQt6"
+    }
+  ]
+}

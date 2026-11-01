@@ -1,0 +1,4 @@
+function collectionModelHasItems(modelObject) {
+        var revisionMarker = root.tidalCollectionState ? Number(root.tidalCollectionState.revision || 0) : 0
+        return !!modelObject && modelObject.rowCount !== undefined && Number(modelObject.rowCount()) > 0
+    }

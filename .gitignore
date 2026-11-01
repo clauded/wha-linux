@@ -1,0 +1,13 @@
+buildkit/work/
+buildkit/out/
+buildkit/dist
+buildkit/.uv-cache/
+buildkit/.test-*/
+__pycache__/
+*.pyc
+*.dmg
+*.exe
+*.sqlite*
+*.log
+.test-results/
+integration-dist/
