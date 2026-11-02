@@ -28,6 +28,7 @@ To build the Linux executable on Arch, you need :
 - gst-plugins-bad
 - gst-plugins-ugly
 - wireless tools
+
 `pacman -S python python-requests uv 7zip qt6-base gst-plugins-good gst-plugins-bad gst-plugins-ugly wireless tools`
 
 On Fedora, you need:
@@ -69,7 +70,6 @@ Known bugs
 ----------
 - Presets are not available.
 - Only the music services built into the official desktop app are available and local/media-server music. Services such as YouTube Music, Spotify or Amazon Music exist only in the mobile apps.
-- See also [docs/COMPATIBILITY.md](docs/COMPATIBILITY.md) for installer specific details.
 
 Credits
 -------
